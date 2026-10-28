@@ -1,0 +1,10 @@
+*.ko
+kernelsu-abs*.ko
+kernelsu-patched.ko
+kallsyms*.txt
+ks_*.txt
+*.log
+*.out
+__pycache__/
+*.pyc
+build/out/

@@ -1,0 +1,6 @@
+id=roothelper
+name=Root Helper
+version=1.0
+versionCode=1
+author=ray
+description=drops a root helper and sets selinux permissive
