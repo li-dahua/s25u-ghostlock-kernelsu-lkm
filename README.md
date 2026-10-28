@@ -1,15 +1,17 @@
-# S25U (SM-S9380) — KernelSU via LKM + memory-only root
+# S25U (SM-S9380) — GhostLock (CVE-2026-43499) + KernelSU LKM 内存态 root
 
 Galaxy S25 Ultra（SM-S9380，国行 `S9380ZHSDCZH1`，Android 16 / SDK 36，内核 `6.6.98-android15-8-pd6ff1cd-abogkiS9380ZHSDCZH1-4k`）在 **bootloader 锁死、不能刷机** 的前提下，拿到 **KernelSU（LKM 模式）** 的完整流程与踩坑记录。
 
 > 重启 = 全部丢失（root、KSU、模块）。这是纯内存态方案。
+>
+> 漏洞利用侧属于 **GhostLock / RootMyGalaxy** 家族（CVE-2026-43499，pselect 栈写入竞态），本仓库只做「拿到临时 root 之后」的工程化部分：符号解析、prelink、模块加载、SELinux/DEFEX 对抗。
 
 ---
 
 ## 1. 总体思路
 
 ```
-CVE-2026-43499 exploit (pselect 竞态)  →  临时 root (uid=0, u:r:kernel:s0)
+GhostLock / CVE-2026-43499 exploit (pselect 竞态)  →  临时 root (uid=0, u:r:kernel:s0)
         ↓
 读 /proc/kallsyms → prelink kernelsu.ko（UND → SHN_ABS 运行时地址）
         ↓
